@@ -22,8 +22,15 @@ function renderlist() {
     itemsArray.forEach((item, index) => {
     const li = document.createElement('li');
     li.innerHTML = `
-    <span>${item}</span>
-    <i class="fas fa-trash" onclick="deleteItem(${index})"></i>`;
+    <div class="output-li">
+        <div>
+            <span>${item}</span>
+        </div>
+        <div>
+            <input type="checkbox">
+            <i class="fas fa-trash" onclick="deleteItem(${index})"></i>
+        </div>
+    </div>`;
     list.appendChild(li)       
     });
 }
