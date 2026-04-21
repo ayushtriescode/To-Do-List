@@ -1,50 +1,64 @@
-const input = document.getElementById('itemInput');
-const addBtn = document.getElementById('addBtn');
-const list = document.getElementById('myList');
+const input = document.getElementById("itemInput");
+const addBtn = document.getElementById("addBtn");
+const list = document.getElementById("myList");
 
-let itemsArray = JSON.parse(localStorage.getItem('myTasks')) || [] ;
+let itemsArray = JSON.parse(localStorage.getItem("myTasks")) || [];
 
 renderlist();
 
-addBtn.addEventListener('click', () => {
-    const text = input.value.trim();
-    if(text !== ""){
-        itemsArray.push(text);
-        updateStorage();
-        renderlist();
-        input.value = "";
-    }
+addBtn.addEventListener("click", () => {
+  const text = input.value.trim();
+  if (text !== "") {
+    itemsArray.push({ 
+            text: text, 
+            checked: false 
+        });
+    updateStorage();
+    renderlist();
+    input.value = "";
+  }
 });
 
 function renderlist() {
-    list.innerHTML = "";
+  list.innerHTML = "";
 
-    itemsArray.forEach((item, index) => {
-    const li = document.createElement('li');
+  itemsArray.forEach((item, index) => {
+    const li = document.createElement("li");
+    const isDone = item.checked
+      ? 'style="text-decoration: line-through; opacity: 0.5"'
+      : "";
+    const isTicked = item.checked ? "checked" : "";
+
     li.innerHTML = `
-    <div class="output-li">
-        <div>
-            <span>${item}</span>
-        </div>
-        <div>
-            <input type="checkbox">
-            <i class="fas fa-trash" onclick="deleteItem(${index})"></i>
-        </div>
-    </div>`;
-    list.appendChild(li)       
-    });
+        <div class="output-li">
+            <div ${isDone}>
+                <span>${item.text}</span>
+            </div>
+            <div class="li-btn">
+                <i class="fas fa-trash" onclick="deleteItem(${index})"></i>
+                <input type="checkbox" ${isTicked} onclick="toggleCheck(${index})">
+            </div>
+        </div>`;
+    list.appendChild(li);
+  });
 }
 
 function deleteItem(index) {
-    itemsArray.splice(index, 1);
-    updateStorage();
-    renderlist();
+  itemsArray.splice(index, 1);
+  updateStorage();
+  renderlist();
+}
+
+function toggleCheck(index) {
+  itemsArray[index].checked = !itemsArray[index].checked;
+  updateStorage();
+  renderlist(); 
 }
 
 function updateStorage() {
-    localStorage.setItem('myTasks', JSON.stringify(itemsArray));
+  localStorage.setItem("myTasks", JSON.stringify(itemsArray));
 }
 
-input.addEventListener('keypress', (e) => {
-    if(e.key === "Enter") addBtn.click();
+input.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") addBtn.click();
 });
