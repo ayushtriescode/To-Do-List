@@ -109,14 +109,31 @@ input::placeholder {
   color: var(--base-color);
   font-family: var(--font-body);
   font-size: 1.5rem;
-  padding: 25px 5px;
-  padding-left: 40px;
+  padding: 25px 15px;
+  padding-left: 30px;
   width: 100%;
 }
 
 .output i {
   font-size: 1rem;
   color: var(--text-color-variant);
+  cursor: pointer;
+}
+
+.clearAll{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.clearAll button{
+  background-color: var(--base-color);
+  color: var(--text-color);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  padding: 6.1px 20px;
+  border-radius: 8px;
+  margin-top: 30px;
   cursor: pointer;
 }
 

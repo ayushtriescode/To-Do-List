@@ -55,6 +55,12 @@ function toggleCheck(index) {
   renderlist(); 
 }
 
+function clearAll() {
+  itemsArray = [];
+  updateStorage();
+  renderlist();
+}
+
 function updateStorage() {
   localStorage.setItem("myTasks", JSON.stringify(itemsArray));
 }
