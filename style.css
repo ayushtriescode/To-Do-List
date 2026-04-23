@@ -83,6 +83,7 @@ input::placeholder {
   min-height: 300px;
   width: 90%;
   margin-top: 50px;
+  box-shadow: 0 0 12px var(--base-color);
 }
 
 .out-btn{
@@ -133,6 +134,16 @@ input::placeholder {
   width: 100%;
 }
 
+select{
+  background-color: var(--text-color-variant);
+  border: none;
+  border-radius: 2px;
+  font-family: var(--font-body);
+}
+
+select:focus{
+  outline: none;
+}
 .output i {
   font-size: 1rem;
   color: var(--text-color-variant);

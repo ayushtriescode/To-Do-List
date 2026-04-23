@@ -48,6 +48,11 @@ function renderlist() {
                 <span>${item.text}</span>
             </div>
             <div class="li-btn">
+                <select onchange="updatePriority(${item.id}, this.value)">
+                <option value="low" ${item.priority === 'low' ? 'selected' : ''}>Low</option>
+                <option value="medium" ${item.priority === 'medium' ? 'selected' : ''}>Medium</option>
+                <option value="high" ${item.priority === 'high' ? 'selected' : ''}>High</option>
+                </select>
                 <i class="fas fa-trash" onclick="deleteItem(${item.id})"></i>
                 <input type="checkbox" ${isTicked} onclick="toggleCheck(${item.id})">
             </div>
@@ -66,6 +71,15 @@ function toggleCheck(id) {
   const task = itemsArray.find(item => item.id === id);
   if (task) {
         task.checked = !task.checked;
+    }
+  updateStorage();
+  renderlist(); 
+}
+
+function updatePriority(id, newPriority) {
+  const pri = itemsArray.find(item => item.id === id);
+  if (pri) {
+        pri.priority = newPriority;
     }
   updateStorage();
   renderlist(); 
