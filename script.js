@@ -1,3 +1,4 @@
+let currentFilter = 'all'
 const input = document.getElementById("itemInput");
 const addBtn = document.getElementById("addBtn");
 const list = document.getElementById("myList");
@@ -11,7 +12,10 @@ addBtn.addEventListener("click", () => {
   if (text !== "") {
     itemsArray.push({ 
             text: text, 
-            checked: false 
+            checked: false,
+            id: Date.now(),
+            priority: 'low',
+            createdAt: Date() 
         });
     updateStorage();
     renderlist();
@@ -22,7 +26,16 @@ addBtn.addEventListener("click", () => {
 function renderlist() {
   list.innerHTML = "";
 
-  itemsArray.forEach((item, index) => {
+  let filterArray = itemsArray;
+
+  if(currentFilter === 'active'){
+    filterArray = itemsArray.filter(item => !item.checked);
+  }
+  else if(currentFilter === 'completed'){
+    filterArray = itemsArray.filter(item => item.checked);
+  }
+
+  filterArray.forEach((item) => {
     const li = document.createElement("li");
     const isDone = item.checked
       ? 'style="text-decoration: line-through; opacity: 0.5"'
@@ -35,24 +48,32 @@ function renderlist() {
                 <span>${item.text}</span>
             </div>
             <div class="li-btn">
-                <i class="fas fa-trash" onclick="deleteItem(${index})"></i>
-                <input type="checkbox" ${isTicked} onclick="toggleCheck(${index})">
+                <i class="fas fa-trash" onclick="deleteItem(${item.id})"></i>
+                <input type="checkbox" ${isTicked} onclick="toggleCheck(${item.id})">
             </div>
         </div>`;
     list.appendChild(li);
   });
 }
 
-function deleteItem(index) {
-  itemsArray.splice(index, 1);
+function deleteItem(id) {
+  itemsArray = itemsArray.filter(item => item.id !== id);
   updateStorage();
   renderlist();
 }
 
-function toggleCheck(index) {
-  itemsArray[index].checked = !itemsArray[index].checked;
+function toggleCheck(id) {
+  const task = itemsArray.find(item => item.id === id);
+  if (task) {
+        task.checked = !task.checked;
+    }
   updateStorage();
   renderlist(); 
+}
+
+function setFilter(filter){
+  currentFilter = filter ;
+  renderlist();
 }
 
 function clearAll() {

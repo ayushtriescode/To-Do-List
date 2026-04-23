@@ -15,7 +15,14 @@
         <button id="addBtn">Add</button>
     </div>
     <div class="output">
+        <div class="out-btn">
+        <button onclick="setFilter('all')">All</button>
+        <button onclick="setFilter('active')">Active</button>
+        <button onclick="setFilter('completed')">Completed</button>
+        </div>
+        <div class="out-list">
         <ul id="myList"></ul>
+        </div>
     </div>
     </main>
     <div class="clearAll">
